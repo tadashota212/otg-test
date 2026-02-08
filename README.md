@@ -97,4 +97,45 @@ sequenceDiagram
 ```
 
 ## 4. OTG MCP Server
-(To be added)
+## 4. OTG MCP Server
+
+This environment supports integration with an **MCP (Model Context Protocol) Server**, allowing LLMs (like Claude) to control the traffic generator using natural language.
+
+### Architecture
+
+The MCP Server acts as a bridge between the LLM client (e.g., Claude Desktop) and the OTG API. It runs as a Python process on the host, communicating with the client via standard input/output (Stdio) over SSH.
+
+```mermaid
+sequenceDiagram
+    participant User as User (Claude Desktop)
+    participant SSH as SSH Connection
+    participant MCP as MCP Server (Python)
+    participant OTG as OTG API (Ixia-c)
+
+    Note over User, MCP: Communication via Stdio (JSON-RPC)
+    User->>SSH: Execute start_mcp.sh
+    SSH->>MCP: Start Server Process
+    
+    loop Command Loop
+        User->>MCP: Call Tool (e.g., start_traffic)
+        MCP->>OTG: Execute Snappi Command
+        OTG-->>MCP: Return API Result
+        MCP-->>User: Return Tool Output (JSON)
+    end
+```
+
+### Components
+
+1.  **MCP Server (`otg-mcp`)**:
+    - A Python application that implements the Model Context Protocol.
+    - Located in the `otg-mcp` directory (based on `https://github.com/h4ndzdatm0ld/otg-mcp`).
+    - Uses `snappi` library to translate natural language tool calls into OTG API commands.
+
+2.  **Configuration**:
+    - **`otg-mcp-config.json`**: Defines the OTG API endpoint and port mappings.
+    - **`start_mcp.sh`**: A helper script to launch the server within the correct Python virtual environment.
+
+3.  **Client Integration**:
+    - The Claude Desktop App (or other MCP clients) connects via SSH and executes `start_mcp.sh`.
+    - This establishes a persistent connection where the LLM can invoke tools like `start_traffic` or `get_metrics` directly.
+
