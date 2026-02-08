@@ -70,8 +70,8 @@ Done.
 
 ```mermaid
 sequenceDiagram
-    participant User as Control Script
-    participant API as OTG Controller
+    participant User as Python Script (snappi)
+    participant API as OTG API (IXIA-c:8443)
     participant Tx as Tx Port (eth1)
     participant DUT as Fabric (Leaf/Spine)
     participant Rx as Rx Port (eth3)
