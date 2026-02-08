@@ -127,6 +127,7 @@ sequenceDiagram
 
 1.  **MCP Server (`otg-mcp`)**:
     - A Python application that implements the Model Context Protocol.
+    - Based on the open-source project: [h4ndzdatm0ld/otg-mcp](https://github.com/h4ndzdatm0ld/otg-mcp)
     - Located in the `otg-mcp` directory.
     - Uses `snappi` library to translate natural language tool calls into OTG API commands.
 
