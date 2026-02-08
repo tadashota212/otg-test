@@ -107,26 +107,31 @@ The MCP Server acts as a bridge between the LLM client (e.g., Claude Desktop) an
 ```mermaid
 sequenceDiagram
     participant User as User
-    participant LLM as LLM (Claude/Gemini)
+    participant Client as Claude Desktop App
+    participant LLM as LLM (Claude)
     participant SSH as SSH Connection
     participant MCP as MCP Server (Python)
     participant OTG as OTG API (Ixia-c)
 
-    Note over User, LLM: Natural Language Input
-    User->>LLM: "Start traffic on OTG"
+    Note over User, Client: Natural Language Input
+    User->>Client: "Start traffic on OTG"
+    Client->>LLM: Process Request
     
     Note over LLM, MCP: Communication via Stdio (JSON-RPC)
-    LLM->>SSH: Execute start_mcp.sh
+    LLM->>Client: Determine Tool to Call
+    Client->>SSH: Execute start_mcp.sh
     SSH->>MCP: Start Server Process
     
     loop Command Loop
-        LLM->>MCP: Call Tool (e.g., start_traffic)
+        Client->>MCP: Call Tool (e.g., start_traffic)
         MCP->>OTG: Execute Snappi Command
         OTG-->>MCP: Return API Result
-        MCP-->>LLM: Return Tool Output (JSON)
+        MCP-->>Client: Return Tool Output (JSON)
+        Client->>LLM: Process Result
     end
     
-    LLM-->>User: "Traffic started successfully"
+    LLM->>Client: Generate Response
+    Client-->>User: "Traffic started successfully"
 ```
 
 ### Components
