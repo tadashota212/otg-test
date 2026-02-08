@@ -107,7 +107,7 @@ The MCP Server acts as a bridge between the LLM client (e.g., Claude Desktop) an
 ```mermaid
 sequenceDiagram
     participant User as User
-    participant Client as Claude Desktop App
+    participant Client as Claude Desktop (MCP Client)
     participant LLM as LLM (Claude)
     participant SSH as SSH Connection
     participant MCP as MCP Server (Python)
