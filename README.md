@@ -138,3 +138,56 @@ sequenceDiagram
     - The Claude Desktop App (or other MCP clients) connects via SSH and executes `start_mcp.sh`.
     - This establishes a persistent connection where the LLM can invoke tools like `start_traffic` or `get_metrics` directly.
 
+### Known Issues
+
+> **Note**: Currently, connecting from Claude Desktop to the OTG MCP Server results in a "Server disconnected" error. This issue is under investigation. As a workaround, use the CLI tool described below.
+
+### Alternative: CLI Tool for Testing
+
+For testing and demonstration purposes, an interactive CLI tool is provided:
+
+```bash
+python3 samples/otg_cli.py
+```
+
+**Available Commands:**
+```
+list          - List available tools
+targets       - Get available targets
+health [target] - Health check
+start <target> - Start traffic
+stop <target>  - Stop traffic
+metrics [target] - Get metrics
+quit          - Exit
+```
+
+**Example Session:**
+```
+otg> list
+Available Tools:
+  • get_available_targets: Get all available traffic generator targets...
+  • start_traffic: Start traffic generation...
+  • stop_traffic: Stop traffic generation...
+  • get_metrics: Get metrics from the traffic generator...
+  ...
+
+otg> targets
+Getting available targets...
+{
+  "172.20.20.2:8443": {
+    "name": "172.20.20.2:8443",
+    "location": "https://172.20.20.2:8443",
+    ...
+  }
+}
+
+otg> health 172.20.20.2:8443
+Checking health for target: 172.20.20.2:8443...
+{
+  "status": "healthy",
+  ...
+}
+
+otg> quit
+```
+
