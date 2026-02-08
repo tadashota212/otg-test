@@ -104,6 +104,19 @@ This environment supports integration with an **MCP (Model Context Protocol) Ser
 
 The MCP Server acts as a bridge between the LLM client (e.g., Claude Desktop) and the OTG API. It runs as a Python process on the host, communicating with the client via standard input/output (Stdio) over SSH.
 
+![OTG MCP Architecture](png/otg-test2.png)
+
+The diagram above shows both the **Data Plane** (network topology) and **Control Plane** (MCP architecture). The control flow is:
+1. User inputs natural language commands to Claude Desktop
+2. Claude Desktop's LLM determines which tools to call
+3. MCP Server receives tool calls via JSON-RPC
+4. Control scripts use the `snappi` library to communicate with the OTG Controller
+5. OTG Controller manages the Traffic Generator via its API (port 8443)
+
+### Operational Workflow
+
+The following sequence diagram details the message flow during a typical operation:
+
 ```mermaid
 sequenceDiagram
     participant User as User
