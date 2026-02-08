@@ -97,7 +97,6 @@ sequenceDiagram
 ```
 
 ## 4. OTG MCP Server
-## 4. OTG MCP Server
 
 This environment supports integration with an **MCP (Model Context Protocol) Server**, allowing LLMs (like Claude) to control the traffic generator using natural language.
 
@@ -128,7 +127,7 @@ sequenceDiagram
 
 1.  **MCP Server (`otg-mcp`)**:
     - A Python application that implements the Model Context Protocol.
-    - Located in the `otg-mcp` directory (based on `https://github.com/h4ndzdatm0ld/otg-mcp`).
+    - Located in the `otg-mcp` directory.
     - Uses `snappi` library to translate natural language tool calls into OTG API commands.
 
 2.  **Configuration**:
@@ -138,4 +137,22 @@ sequenceDiagram
 3.  **Client Integration**:
     - The Claude Desktop App (or other MCP clients) connects via SSH and executes `start_mcp.sh`.
     - This establishes a persistent connection where the LLM can invoke tools like `start_traffic` or `get_metrics` directly.
+
+### Example Interaction
+
+Below is a simulated transcript of how an LLM interacts with the OTG MCP Server:
+
+**User**:  
+> "Check the connectivity between Spine1 and Leaf1 using OTG."
+
+**Claude (using MCP)**:  
+> *Thinking: I need to verify basic connectivity.*  
+> **Tool Call**: `verify_layer2_connectivity(src_port="eth1", dst_port="eth3")`
+
+**MCP Server**:  
+> *Action: Configures OTG flows, sends packets, measures loss.*  
+> **Result**: `{"tx_frames": 1000, "rx_frames": 1000, "loss": 0, "status": "PASS"}`
+
+**Claude**:  
+> "Connectivity verification passed. Sent 1000 frames with 0% loss."
 
