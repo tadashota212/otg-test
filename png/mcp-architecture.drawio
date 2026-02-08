@@ -1,0 +1,61 @@
+<mxfile host="Electron" modified="2026-02-08T08:33:00.000Z" agent="5.0" etag="v3" version="21.6.8" type="device"><diagram id="diagram_1" name="Page-1"><mxGraphModel dx="1422" dy="823" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" />
+
+<!-- Data Plane: Network Topology -->
+<mxCell id="spine1" value="Spine1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="300" y="250" width="80" height="40" as="geometry" /></mxCell>
+<mxCell id="spine2" value="Spine2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="500" y="250" width="80" height="40" as="geometry" /></mxCell>
+<mxCell id="leaf1" value="Leaf1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="200" y="400" width="80" height="40" as="geometry" /></mxCell>
+<mxCell id="leaf2" value="Leaf2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="300" y="400" width="80" height="40" as="geometry" /></mxCell>
+<mxCell id="leaf3" value="Leaf3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="500" y="400" width="80" height="40" as="geometry" /></mxCell>
+<mxCell id="leaf4" value="Leaf4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1"><mxGeometry x="600" y="400" width="80" height="40" as="geometry" /></mxCell>
+<mxCell id="otg" value="Traffic Generator&#10;(IXIA-c)&#10;OTG API: 8443" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1"><mxGeometry x="380" y="600" width="120" height="70" as="geometry" /></mxCell>
+
+<!-- Control Plane Components -->
+<mxCell id="user" value="User" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1"><mxGeometry x="880" y="50" width="60" height="60" as="geometry" /></mxCell>
+<mxCell id="claude" value="Claude Desktop&#10;(MCP Client)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="850" y="180" width="120" height="60" as="geometry" /></mxCell>
+<mxCell id="llm" value="LLM&#10;(Claude)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="1020" y="180" width="100" height="60" as="geometry" /></mxCell>
+<mxCell id="mcp_server" value="MCP Server&#10;(Python + snappi)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="850" y="340" width="120" height="60" as="geometry" /></mxCell>
+
+<!-- Data Plane Connections (Network Links) -->
+<mxCell id="100" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="spine1" target="leaf1"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="101" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="spine1" target="leaf2"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="102" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="spine1" target="leaf3"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="103" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="spine1" target="leaf4"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="104" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="spine2" target="leaf1"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="105" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="spine2" target="leaf2"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="106" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="spine2" target="leaf3"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="107" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="spine2" target="leaf4"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="108" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="leaf1" target="leaf2"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="109" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="leaf3" target="leaf4"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="110" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="otg" target="leaf1"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="111" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="otg" target="leaf2"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="112" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="otg" target="leaf3"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+<mxCell id="113" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="otg" target="leaf4"><mxGeometry width="50" height="50" relative="1" as="geometry" /></mxCell>
+
+<!-- Control Plane Connections (API/MCP Flows) -->
+<mxCell id="c1" value="Natural Language" style="endArrow=classic;html=1;rounded=0;strokeColor=#9673a6;strokeWidth=2;" edge="1" parent="1" source="user" target="claude"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="10" as="offset" /></mxGeometry></mxCell>
+
+<mxCell id="c2" value="Process Request" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=2;dashed=1;" edge="1" parent="1" source="claude" target="llm"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint y="-10" as="offset" /></mxGeometry></mxCell>
+
+<mxCell id="c3" value="MCP Protocol&#10;(JSON-RPC)" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" parent="1" source="claude" target="mcp_server"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="-40" y="-10" as="offset" /></mxGeometry></mxCell>
+
+<mxCell id="c4" value="HTTPS API&#10;(via snappi library)" style="endArrow=classic;html=1;rounded=0;strokeColor=#b85450;strokeWidth=2;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="mcp_server" target="otg"><mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="-30" y="10" as="offset" /></mxGeometry></mxCell>
+
+<!-- Labels -->
+<mxCell id="label_data" value="Data Plane (Network Topology)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1" vertex="1" parent="1"><mxGeometry x="200" y="200" width="250" height="30" as="geometry" /></mxCell>
+
+<mxCell id="label_control" value="Control Plane (MCP Architecture)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1" vertex="1" parent="1"><mxGeometry x="850" y="10" width="280" height="30" as="geometry" /></mxCell>
+
+<!-- Legend -->
+<mxCell id="legend_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;" vertex="1" parent="1"><mxGeometry x="850" y="480" width="270" height="120" as="geometry" /></mxCell>
+
+<mxCell id="legend_title" value="Legend" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" vertex="1" parent="1"><mxGeometry x="860" y="490" width="60" height="20" as="geometry" /></mxCell>
+
+<mxCell id="legend1" value="MCP Server acts as:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1"><mxGeometry x="860" y="515" width="250" height="20" as="geometry" /></mxCell>
+
+<mxCell id="legend2" value="• MCP Protocol Server (for Claude Desktop)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1"><mxGeometry x="870" y="535" width="240" height="20" as="geometry" /></mxCell>
+
+<mxCell id="legend3" value="• HTTPS Client (for Traffic Generator)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1"><mxGeometry x="870" y="555" width="240" height="20" as="geometry" /></mxCell>
+
+<mxCell id="legend4" value="• Uses snappi library internally" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1"><mxGeometry x="870" y="575" width="240" height="20" as="geometry" /></mxCell>
+
+</root></mxGraphModel></diagram></mxfile>

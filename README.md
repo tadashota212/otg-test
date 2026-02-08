@@ -28,7 +28,7 @@ This will spin up:
 - **Connectivity:** The Traffic Generator (IXIA-c) connects to the fabric via an MLAG port-channel to each Leaf pair.
 
 ### Topology Diagram
-![Topology Diagram](png/otg-test.png)
+![Topology Diagram](png/network-topology.png)
 
 ## 3. Traffic Generator
 
@@ -104,7 +104,7 @@ This environment supports integration with an **MCP (Model Context Protocol) Ser
 
 The MCP Server acts as a bridge between the LLM client (e.g., Claude Desktop) and the OTG API. It runs as a Python process on the host, communicating with the client via standard input/output (Stdio) over SSH.
 
-![OTG MCP Architecture](png/otg-test2.png)
+![OTG MCP Architecture](png/mcp-architecture.png)
 
 The diagram above shows both the **Data Plane** (network topology) and **Control Plane** (MCP architecture). The control flow is:
 1. User inputs natural language commands to Claude Desktop
