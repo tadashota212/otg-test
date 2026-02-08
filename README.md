@@ -28,7 +28,7 @@ This will spin up:
 - **Connectivity:** The Traffic Generator (IXIA-c) connects to the fabric via an MLAG port-channel to each Leaf pair.
 
 ### Topology Diagram
-![Topology Diagram](png/topology.png)
+![Topology Diagram](png/otg-test.png)
 
 ## 3. Traffic Generator
 
