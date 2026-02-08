@@ -66,5 +66,35 @@ Monitoring metrics for 10 seconds...
 Done.
 ```
 
+### Operational Workflow
+
+```mermaid
+sequenceDiagram
+    participant User as Control Script
+    participant API as OTG Controller
+    participant Tx as Tx Port (eth1)
+    participant DUT as Fabric (Leaf/Spine)
+    participant Rx as Rx Port (eth3)
+
+    Note over User, API: 1. Configuration
+    User->>API: POST /config (Flows, Headers, Rate)
+    API-->>Tx: Configure Port & Streams
+    API-->>Rx: Configure Port & Capture
+
+    Note over Tx, DUT: 2. Protocols (ARP/ND)
+    Tx->>DUT: ARP Request (Gateway IP?)
+    DUT-->>Tx: ARP Reply (MAC Address)
+
+    Note over User, API: 3. Execution
+    User->>API: POST /control/transmit (Start)
+    Tx->>DUT: Send Traffic Flows (UDP/TCP)
+    DUT->>Rx: Forward Traffic
+    Rx->>Rx: Record Metrics (Latency, Loss)
+
+    Note over User, API: 4. Validation
+    User->>API: POST /results/metrics
+    API-->>User: Return Metrics (Tx, Rx count)
+```
+
 ## 4. OTG MCP Server
 (To be added)
