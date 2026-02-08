@@ -1,0 +1,19 @@
+
+# Containerlab
+.clab-otg-test/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# MacOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
