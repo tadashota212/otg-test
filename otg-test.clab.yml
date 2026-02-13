@@ -12,7 +12,7 @@ topology:
       image: ceos:4.33.4M
       mgmt-ipv4: 172.20.20.36
       startup-config: configs/spine2.cfg
-    
+
     leaf1:
       kind: ceos
       image: ceos:4.33.4M
@@ -23,7 +23,7 @@ topology:
       image: ceos:4.33.4M
       mgmt-ipv4: 172.20.20.32
       startup-config: configs/leaf2.cfg
-    
+
     leaf3:
       kind: ceos
       image: ceos:4.33.4M
@@ -39,6 +39,66 @@ topology:
       kind: keysight_ixia-c-one
       image: ghcr.io/open-traffic-generator/ixia-c-one:latest
       mgmt-ipv4: 172.20.20.37
+
+    # Telemetry Stack
+    gnmic:
+      kind: linux
+      image: ghcr.io/openconfig/gnmic:latest
+      mgmt-ipv4: 172.20.20.41
+      binds:
+        - telemetry/gnmic-config.yml:/gnmic-config.yml:ro
+      cmd: --config /gnmic-config.yml --log --subscribe
+      group: telemetry
+
+    prometheus:
+      kind: linux
+      image: prom/prometheus:latest
+      mgmt-ipv4: 172.20.20.42
+      binds:
+        - telemetry/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      cmd: --config.file=/etc/prometheus/prometheus.yml
+      ports:
+        - 9090:9090
+      group: telemetry
+
+    grafana:
+      kind: linux
+      image: grafana/grafana:latest
+      mgmt-ipv4: 172.20.20.43
+      binds:
+        - telemetry/grafana/datasources/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+        - telemetry/grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+        - telemetry/grafana/dashboards:/var/lib/grafana/dashboards
+      ports:
+        - 3000:3000
+      env:
+        GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource"
+        GF_SECURITY_ADMIN_USER: "admin"
+        GF_SECURITY_ADMIN_PASSWORD: "admin"
+        GF_AUTH_ANONYMOUS_ENABLED: "true"
+      group: telemetry
+
+    loki:
+      kind: linux
+      image: grafana/loki:latest
+      mgmt-ipv4: 172.20.20.44
+      binds:
+        - telemetry/loki-config.yml:/etc/loki/local-config.yaml:ro
+      cmd: -config.file=/etc/loki/local-config.yaml
+      ports:
+        - 3100:3100
+      group: telemetry
+
+    promtail:
+      kind: linux
+      image: grafana/promtail:latest
+      mgmt-ipv4: 172.20.20.45
+      binds:
+        - telemetry/promtail-config.yml:/etc/promtail/config.yml:ro
+      cmd: -config.file=/etc/promtail/config.yml
+      ports:
+        - 1514:1514/udp
+      group: telemetry
 
   links:
     # Spine1 Connections

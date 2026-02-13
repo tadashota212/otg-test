@@ -1,0 +1,54 @@
+targets:
+  spine1:
+    address: spine1:6030
+    username: admin
+    password: admin
+    insecure: true
+    encoding: json_ietf
+  spine2:
+    address: spine2:6030
+    username: admin
+    password: admin
+    insecure: true
+    encoding: json_ietf
+  leaf1:
+    address: leaf1:6030
+    username: admin
+    password: admin
+    insecure: true
+    encoding: json_ietf
+  leaf2:
+    address: leaf2:6030
+    username: admin
+    password: admin
+    insecure: true
+    encoding: json_ietf
+  leaf3:
+    address: leaf3:6030
+    username: admin
+    password: admin
+    insecure: true
+    encoding: json_ietf
+  leaf4:
+    address: leaf4:6030
+    username: admin
+    password: admin
+    insecure: true
+    encoding: json_ietf
+
+subscriptions:
+  default:
+    paths:
+      - /interfaces/interface/state/counters
+      - /interfaces/interface/subinterfaces/subinterface/state/counters
+      - /system/memory/state
+      - /system/processes/process/state
+    mode: sample
+    sample-interval: 10s
+    encoding: json_ietf
+
+outputs:
+  prometheus_client:
+    type: prometheus
+    listen: :9804
+    path: /metrics
