@@ -11,8 +11,8 @@
 
 <!-- Control Plane Components -->
 <mxCell id="user" value="User" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1"><mxGeometry x="880" y="50" width="60" height="60" as="geometry" /></mxCell>
-<mxCell id="claude" value="Claude Desktop&#10;(MCP Client)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="850" y="180" width="120" height="60" as="geometry" /></mxCell>
-<mxCell id="llm" value="LLM&#10;(Claude)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="1020" y="180" width="100" height="60" as="geometry" /></mxCell>
+<mxCell id="claude" value="Antigravity IDE&#10;(MCP Client)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1"><mxGeometry x="850" y="180" width="120" height="60" as="geometry" /></mxCell>
+<mxCell id="llm" value="LLM&#10;(Gemini)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1"><mxGeometry x="1020" y="180" width="100" height="60" as="geometry" /></mxCell>
 <mxCell id="mcp_server" value="MCP Server&#10;(Python + snappi)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="850" y="340" width="120" height="60" as="geometry" /></mxCell>
 
 <!-- Data Plane Connections (Network Links) -->
@@ -52,7 +52,7 @@
 
 <mxCell id="legend1" value="MCP Server acts as:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1"><mxGeometry x="860" y="515" width="250" height="20" as="geometry" /></mxCell>
 
-<mxCell id="legend2" value="• MCP Protocol Server (for Claude Desktop)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1"><mxGeometry x="870" y="535" width="240" height="20" as="geometry" /></mxCell>
+<mxCell id="legend2" value="• MCP Protocol Server (for Antigravity IDE)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1"><mxGeometry x="870" y="535" width="240" height="20" as="geometry" /></mxCell>
 
 <mxCell id="legend3" value="• HTTPS Client (for Traffic Generator)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1"><mxGeometry x="870" y="555" width="240" height="20" as="geometry" /></mxCell>
 
