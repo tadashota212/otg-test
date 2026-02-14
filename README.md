@@ -98,17 +98,18 @@ sequenceDiagram
 
 ## 4. OTG MCP Server
 
-This environment supports integration with an **MCP (Model Context Protocol) Server**, allowing LLMs (like Claude) to control the traffic generator using natural language.
+This environment supports integration with an **MCP (Model Context Protocol) Server**, allowing AI IDEs (like Antigravity) to control the traffic generator using natural language.
 
 ### Architecture
 
-The MCP Server acts as a bridge between the LLM client (e.g., Claude Desktop) and the OTG API. It runs as a Python process on the host, communicating with the client via standard input/output (Stdio) over SSH.
+The MCP Server acts as a bridge between the AI Client (e.g., Antigravity IDE) and the OTG API. It runs as a Python process on the host, communicating with the client via standard input/output (Stdio).
 
 ![OTG MCP Architecture](png/mcp-architecture.png)
+*(Note: Using Antigravity IDE instead of Claude Desktop)*
 
-The diagram above shows both the **Data Plane** (network topology) and **Control Plane** (MCP architecture). The control flow is:
-1. User inputs natural language commands to Claude Desktop
-2. Claude Desktop's LLM determines which tools to call
+The control flow is:
+1. User inputs natural language commands to Antigravity IDE
+2. Antigravity IDE determines which tools to call
 3. MCP Server receives tool calls via JSON-RPC
 4. Control scripts use the `snappi` library to communicate with the OTG Controller
 5. OTG Controller manages the Traffic Generator via its API (port 8443)
@@ -120,30 +121,20 @@ The following sequence diagram details the message flow during a typical operati
 ```mermaid
 sequenceDiagram
     participant User as User
-    participant Client as Claude Desktop (MCP Client)
-    participant LLM as LLM (Claude)
-    participant SSH as SSH Connection
-    participant MCP as MCP Server (Python)
+    participant Client as Antigravity IDE (MCP Client)
+    participant MCP as MCP Server (Python/venv)
     participant OTG as OTG API (Ixia-c)
 
     Note over User, Client: Natural Language Input
     User->>Client: "Start traffic on OTG"
-    Client->>LLM: Process Request
     
-    Note over LLM, MCP: Communication via Stdio (JSON-RPC)
-    LLM->>Client: Determine Tool to Call
-    Client->>SSH: Execute start_mcp.sh
-    SSH->>MCP: Start Server Process
+    Note over Client, MCP: Communication via Stdio (JSON-RPC)
+    Client->>Client: Determine Tool to Call
+    Client->>MCP: Execute Tool (e.g., start_traffic)
+    MCP->>OTG: Execute Snappi Command
+    OTG-->>MCP: Return API Result
+    MCP-->>Client: Return Tool Output (JSON)
     
-    loop Command Loop
-        Client->>MCP: Call Tool (e.g., start_traffic)
-        MCP->>OTG: Execute Snappi Command
-        OTG-->>MCP: Return API Result
-        MCP-->>Client: Return Tool Output (JSON)
-        Client->>LLM: Process Result
-    end
-    
-    LLM->>Client: Generate Response
     Client-->>User: "Traffic started successfully"
 ```
 
@@ -152,21 +143,56 @@ sequenceDiagram
 1.  **MCP Server (`otg-mcp`)**:
     - A Python application that implements the Model Context Protocol.
     - Based on the open-source project: [h4ndzdatm0ld/otg-mcp](https://github.com/h4ndzdatm0ld/otg-mcp)
+    - **Running in a local virtual environment (venv)** instead of Docker for easier development and debugging.
     - Located in the `otg-mcp` directory.
-    - Uses `snappi` library to translate natural language tool calls into OTG API commands.
 
 2.  **Configuration**:
     - **`otg-mcp-config.json`**: Defines the OTG API endpoint and port mappings.
     - **`start_mcp.sh`**: A helper script to launch the server within the correct Python virtual environment.
 
 3.  **Client Integration**:
-    - The Claude Desktop App (or other MCP clients) connects via SSH and executes `start_mcp.sh`.
-    - This establishes a persistent connection where the LLM can invoke tools like `start_traffic` or `get_metrics` directly.
+    - Antigravity IDE connects to the `start_mcp.sh` script via Stdio.
+    - Ideally configured in `mcp_config.json` with `PYTHONUNBUFFERED=1` to ensure real-time communication.
 
-### Execution Result
+### Reproduction Steps (Memo)
 
-The following screenshot demonstrates the MCP Server being successfully controlled by Claude Desktop. The LLM can discover devices, check status, and execute traffic generation commands.
+To reproduce this environment in another setting:
 
-![Execution Result in Claude Desktop](png/claude_desktop_result.png)
+1.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/h4ndzdatm0ld/otg-mcp.git
+    ```
+
+2.  **Apply Crucial Fixes (Code Patching)**:
+    The original repository requires patching to prevent `stdout` pollution by libraries like `snappi`, which breaks JSON-RPC communication.
+
+    *   **`server.py`**:
+        *   Monkey-patch `logging.StreamHandler` to force all logs to `stderr`.
+        *   Explicitly register tools using `@mcp.tool()` decorators.
+        *   Fix parameter order in tool functions (e.g., `get_metrics`) to match the client.
+    *   **`client.py`**:
+        *   Pass `logger=logger` when initializing `snappi.api()` to prevent it from creating a default `stdout` handler.
+
+3.  **Environment Setup**:
+    *   Create a Python virtual environment (`python3 -m venv .venv`).
+    *   Install dependencies (`pip install -e .`).
+    *   Create a startup script (`start_mcp.sh`) that activates the venv and runs `python -m otg_mcp.server`.
+
+4.  **IDE Configuration (`mcp_config.json`)**:
+    ```json
+    {
+      "mcpServers": {
+        "otg-mcp": {
+          "command": "/path/to/start_mcp.sh",
+          "args": [],
+          "env": {
+            "MCP_LOG_LEVEL": "INFO",
+            "PYTHONUNBUFFERED": "1"
+          }
+        }
+      }
+    }
+    ```
+    *   `PYTHONUNBUFFERED="1"` is critical for real-time communication.
 
 

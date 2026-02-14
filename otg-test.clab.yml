@@ -47,7 +47,7 @@ topology:
       mgmt-ipv4: 172.20.20.41
       binds:
         - telemetry/gnmic-config.yml:/gnmic-config.yml:ro
-      cmd: --config /gnmic-config.yml --log --subscribe
+      cmd: --config /gnmic-config.yml --log subscribe
       group: telemetry
 
     prometheus:
@@ -58,7 +58,7 @@ topology:
         - telemetry/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       cmd: --config.file=/etc/prometheus/prometheus.yml
       ports:
-        - 9090:9090
+        - 9091:9090
       group: telemetry
 
     grafana:
@@ -80,7 +80,7 @@ topology:
 
     loki:
       kind: linux
-      image: grafana/loki:latest
+      image: grafana/loki:2.9.10
       mgmt-ipv4: 172.20.20.44
       binds:
         - telemetry/loki-config.yml:/etc/loki/local-config.yaml:ro
@@ -91,7 +91,7 @@ topology:
 
     promtail:
       kind: linux
-      image: grafana/promtail:latest
+      image: grafana/promtail:2.9.10
       mgmt-ipv4: 172.20.20.45
       binds:
         - telemetry/promtail-config.yml:/etc/promtail/config.yml:ro
