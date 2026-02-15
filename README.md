@@ -154,46 +154,6 @@ sequenceDiagram
     - Antigravity IDE connects to the `start_mcp.sh` script via Stdio.
     - Ideally configured in `mcp_config.json` with `PYTHONUNBUFFERED=1` to ensure real-time communication.
 
-### Note: Reproduction Steps
-
-To reproduce this environment in another setting:
-
-1.  **Clone the Repository**:
-    ```bash
-    git clone https://github.com/h4ndzdatm0ld/otg-mcp.git
-    ```
-
-2.  **Apply Crucial Fixes (Code Patching)**:
-    The original repository requires patching to prevent `stdout` pollution by libraries like `snappi`, which breaks JSON-RPC communication.
-
-    *   **`server.py`**:
-        *   Monkey-patch `logging.StreamHandler` to force all logs to `stderr`.
-        *   Explicitly register tools using `@mcp.tool()` decorators.
-        *   Fix parameter order in tool functions (e.g., `get_metrics`) to match the client.
-    *   **`client.py`**:
-        *   Pass `logger=logger` when initializing `snappi.api()` to prevent it from creating a default `stdout` handler.
-
-3.  **Environment Setup**:
-    *   Create a Python virtual environment (`python3 -m venv .venv`).
-    *   Install dependencies (`pip install -e .`).
-    *   Create a startup script (`start_mcp.sh`) that activates the venv and runs `python -m otg_mcp.server`.
-
-4.  **IDE Configuration (`mcp_config.json`)**:
-    ```json
-    {
-      "mcpServers": {
-        "otg-mcp": {
-          "command": "/path/to/start_mcp.sh",
-          "args": [],
-          "env": {
-            "MCP_LOG_LEVEL": "INFO",
-            "PYTHONUNBUFFERED": "1"
-          }
-        }
-      }
-    }
-    ```
-    *   `PYTHONUNBUFFERED="1"` is critical for real-time communication.
 
 ## 5. Observability Stack
 
