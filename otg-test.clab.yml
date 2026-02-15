@@ -100,6 +100,14 @@ topology:
         - 1514:1514/udp
       group: telemetry
 
+    loki-mcp:
+      kind: linux
+      image: loki-mcp:local
+      mgmt-ipv4: 172.20.20.46
+      env:
+        LOKI_URL: http://loki:3100
+      group: telemetry
+
   links:
     # Spine1 Connections
     - endpoints: ["spine1:eth1", "leaf1:eth1"]

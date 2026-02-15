@@ -1,54 +1,95 @@
+username: admin
+password: admin
+port: 6030
+encoding: json_ietf
+
 targets:
   spine1:
     address: spine1:6030
-    username: admin
-    password: admin
     insecure: true
-    encoding: json_ietf
   spine2:
     address: spine2:6030
-    username: admin
-    password: admin
     insecure: true
-    encoding: json_ietf
   leaf1:
     address: leaf1:6030
-    username: admin
-    password: admin
     insecure: true
-    encoding: json_ietf
   leaf2:
     address: leaf2:6030
-    username: admin
-    password: admin
     insecure: true
-    encoding: json_ietf
   leaf3:
     address: leaf3:6030
-    username: admin
-    password: admin
     insecure: true
-    encoding: json_ietf
   leaf4:
     address: leaf4:6030
-    username: admin
-    password: admin
     insecure: true
-    encoding: json_ietf
 
 subscriptions:
-  default:
+  intf_ctrs:
     paths:
-      - /interfaces/interface/state/counters
-      - /interfaces/interface/subinterfaces/subinterface/state/counters
-      - /system/memory/state
-      - /system/processes/process/state
-    mode: sample
+      - /interfaces/interface[name=*]/state/counters
+    mode: stream
+    stream-mode: sample
     sample-interval: 10s
-    encoding: json_ietf
+  intf_admin_state:
+    paths:
+      - /interfaces/interface[name=*]/state/admin-status
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+  intf_oper_state:
+    paths:
+      - /interfaces/interface[name=*]/state/oper-status
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+  memory:
+    paths:
+      - /system/memory/state
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+  show_ver:
+    paths:
+      - eos_native:/Eos/image
+    mode: stream
+    stream-mode: sample
+    sample-interval: 60s
+  boot_time:
+    paths:
+      - /system/state/boot-time
+    mode: stream
+    stream-mode: sample
+    sample-interval: 60s
 
 outputs:
   prometheus_client:
     type: prometheus
     listen: :9804
-    path: /metrics
+    metric-prefix: gnmic
+    append-subscription-name: true
+    event-processors:
+      - trim-prefixes
+      - bounce-map
+
+processors:
+  trim-prefixes:
+    event-strings:
+      value-names:
+        - ".*"
+      transforms:
+        - path-base:
+            apply-on: "name"
+  bounce-map:
+    event-strings:
+      value-names:
+        - oper-status
+        - admin-status
+      transforms:
+        - replace:
+            apply-on: "value"
+            old: "UP"
+            new: "1"
+        - replace:
+            apply-on: "value"
+            old: "DOWN"
+            new: "0"

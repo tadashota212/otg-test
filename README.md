@@ -195,4 +195,32 @@ To reproduce this environment in another setting:
     ```
     *   `PYTHONUNBUFFERED="1"` is critical for real-time communication.
 
+## 5. Observability Stack
 
+### Overview
+This project includes a comprehensive multi-layer observability stack designed to monitor network performance and analyze logs in real-time. It provides visibility into both the data plane (via gNMI metrics) and the control plane (via Syslog).
+
+### Architecture
+1.  **Metric Collection (`gnmic`)**: A gNMI collector that streams telemetry data (interface counters, CPU, memory) from the cEOS routers.
+2.  **Metrics Storage (Prometheus)**: Stores time-series data collected by `gnmic`.
+3.  **Log Aggregation (Loki & Promtail)**: `Promtail` acts as a Syslog receiver on TCP 1514, which then pushes logs to the `Loki` indexing service.
+4.  **Visualization (Grafana)**: Provides interactive dashboards to correlate metrics and logs during traffic tests.
+
+### Configuration Highlights
+- **`telemetry/gnmic-config.yml`**: Configures subscriptions to `/interfaces/interface[name=*]/state/counters` with 10s sampling and processes "UP/DOWN" states into boolean values.
+- **`telemetry/promtail-config.yml`**: Configures a TCP syslog listener and relabels logs based on hostname and severity for easy filtering.
+- **`telemetry/prometheus.yml`**: Scrapes the `gnmic` output on port 9804.
+
+## 6. Observability Data Access through MCP Servers
+
+### Architecture
+To enable AI-driven network analysis, the project exposes the observability data through the Model Context Protocol (MCP). This allows the AI agent to interact with the environment using specialized tools.
+
+![Observability MCP Architecture](png/mcp-architecture-local.png)
+
+### Key Capabilities
+- **Prometheus MCP Server**: Allows the AI agent to execute PromQL queries to retrieve interface stats, BGP states, and system performance.
+- **Loki MCP Server**: Enables log searching and event correlation using LogQL (e.g., finding BGP state changes during a link failure).
+- **OTG MCP Server**: Provides natural language control over traffic generation and real-time loss metrics retrieval.
+
+By integrating these servers, the Antigravity IDE can autonomously detect anomalies, correlate traffic loss with BGP events, and perform automated validation tests.
