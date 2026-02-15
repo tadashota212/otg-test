@@ -1,7 +1,7 @@
 
 # Agentic AI-Driven Network Validation Test
 
-This repository contains a Containerlab environment for testing BGP-EVPN VXLAN fabrics using Keysight's IXIA-c Open Traffic Generator (OTG).
+This repository contains an **Agentic AI-driven** Containerlab environment for testing BGP-EVPN VXLAN fabrics. It integrates Keysight's IXIA-c Open Traffic Generator (OTG) with a suite of **Model Context Protocol (MCP) Servers**, enabling seamless control, telemetry analysis, and automated testing through natural language interaction with AI agents.
 
 ## 1. How to setup
 
