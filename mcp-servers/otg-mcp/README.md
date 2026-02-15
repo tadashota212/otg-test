@@ -43,7 +43,7 @@ In your Antigravity IDE configuration (`mcp_config.json`), configure the server 
     "mcpServers": {
         "otg-mcp": {
             "command": "python3",
-            "args": ["/absolute/path/to/otg-test/mcp-servers/otg-mcp/src/otg_mcp/server.py"],
+            "args": ["/path/to/otg-test-repo/mcp-servers/otg-mcp/src/otg_mcp/server.py"],
             "env": {
                 "MCP_LOG_LEVEL": "INFO",
                 "PYTHONUNBUFFERED": "1"

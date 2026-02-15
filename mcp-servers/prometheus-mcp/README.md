@@ -28,7 +28,7 @@ In your Antigravity IDE configuration (`mcp_config.json`), configure the server 
     "mcpServers": {
         "prometheus-mcp": {
             "command": "python3",
-            "args": ["/absolute/path/to/otg-test/mcp-servers/prometheus-mcp/src/prometheus_mcp/server.py"],
+            "args": ["/path/to/otg-test-repo/mcp-servers/prometheus-mcp/src/prometheus_mcp/server.py"],
             "env": {
                 "MCP_LOG_LEVEL": "INFO",
                 "PYTHONUNBUFFERED": "1",

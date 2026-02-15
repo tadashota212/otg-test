@@ -1,0 +1,36 @@
+{
+    "mcpServers": {
+        "otg-mcp": {
+            "command": "python3",
+            "args": [
+                "/path/to/otg-test-repo/mcp-servers/otg-mcp/src/otg_mcp/server.py"
+            ],
+            "env": {
+                "MCP_LOG_LEVEL": "INFO",
+                "PYTHONUNBUFFERED": "1"
+            }
+        },
+        "prometheus-mcp": {
+            "command": "python3",
+            "args": [
+                "/path/to/otg-test-repo/mcp-servers/prometheus-mcp/src/prometheus_mcp/server.py"
+            ],
+            "env": {
+                "MCP_LOG_LEVEL": "INFO",
+                "PYTHONUNBUFFERED": "1",
+                "PROMETHEUS_URL": "http://172.20.20.42:9090"
+            }
+        },
+        "loki-mcp": {
+            "command": "python3",
+            "args": [
+                "/path/to/otg-test-repo/mcp-servers/loki-mcp/src/loki_mcp/server.py"
+            ],
+            "env": {
+                "MCP_LOG_LEVEL": "INFO",
+                "PYTHONUNBUFFERED": "1",
+                "LOKI_URL": "http://172.20.20.44:3100"
+            }
+        }
+    }
+}
