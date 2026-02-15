@@ -1,5 +1,5 @@
 
-# OTG Test Environment
+# Agentic AI-Driven Network Validation Test
 
 This repository contains a Containerlab environment for testing BGP-EVPN VXLAN fabrics using Keysight's IXIA-c Open Traffic Generator (OTG).
 
@@ -96,7 +96,7 @@ sequenceDiagram
     API-->>User: Return Metrics (Tx, Rx count)
 ```
 
-## 4. OTG MCP Server
+## 4. Traffic Generator through MCP Servers
 
 This environment supports integration with an **MCP (Model Context Protocol) Server**, allowing AI IDEs (like Antigravity) to control the traffic generator using natural language.
 
@@ -154,7 +154,7 @@ sequenceDiagram
     - Antigravity IDE connects to the `start_mcp.sh` script via Stdio.
     - Ideally configured in `mcp_config.json` with `PYTHONUNBUFFERED=1` to ensure real-time communication.
 
-### Reproduction Steps (Memo)
+### Note: Reproduction Steps
 
 To reproduce this environment in another setting:
 

@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "otg-mcp": {
-      "command": "/home/tada/.gemini/antigravity/scratch/ceos-otg/start_mcp.sh",
-      "args": []
-    }
-  }
-}

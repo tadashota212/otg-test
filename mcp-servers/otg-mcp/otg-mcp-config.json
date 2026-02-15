@@ -1,0 +1,24 @@
+{
+    "targets": {
+        "172.20.20.37:8443": {
+            "ports": {
+                "p1": {
+                    "location": "eth1",
+                    "name": "p1"
+                },
+                "p2": {
+                    "location": "eth2",
+                    "name": "p2"
+                },
+                "p3": {
+                    "location": "eth3",
+                    "name": "p3"
+                },
+                "p4": {
+                    "location": "eth4",
+                    "name": "p4"
+                }
+            }
+        }
+    }
+}

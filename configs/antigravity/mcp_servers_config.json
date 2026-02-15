@@ -1,0 +1,34 @@
+{
+    "mcpServers": {
+        "otg-mcp": {
+            "command": "python3",
+            "args": [
+                "mcp-servers/otg-mcp/src/otg_mcp/server.py"
+            ],
+            "env": {
+                "MCP_LOG_LEVEL": "INFO",
+                "PYTHONUNBUFFERED": "1"
+            }
+        },
+        "prometheus-mcp": {
+            "command": "python3",
+            "args": [
+                "mcp-servers/prometheus-mcp/src/prometheus_mcp/server.py"
+            ],
+            "env": {
+                "MCP_LOG_LEVEL": "INFO",
+                "PYTHONUNBUFFERED": "1"
+            }
+        },
+        "loki-mcp": {
+            "command": "python3",
+            "args": [
+                "mcp-servers/loki-mcp/server.py"
+            ],
+            "env": {
+                "MCP_LOG_LEVEL": "INFO",
+                "PYTHONUNBUFFERED": "1"
+            }
+        }
+    }
+}
