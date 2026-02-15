@@ -18,3 +18,4 @@ __pycache__/
 # Logs
 *.log
 clab-otg-test/
+configs/antigravity/mcp_servers_config.json
